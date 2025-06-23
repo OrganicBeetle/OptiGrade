@@ -1,7 +1,14 @@
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { collection, getDocs, query, doc, getDoc, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  doc,
+  getDoc,
+  where,
+} from "firebase/firestore";
 import { db } from "../utils/firebase";
 import Header from "../components/header";
 import { courseMap } from "../utils/CourseMap";
@@ -23,6 +30,7 @@ import { useUpcomingTargets } from "../components/useUpcomingTargets.jsx";
 import DeleteTarget from "../components/DeleteTarget.jsx";
 import EditTarget from "../components/EditTarget.jsx";
 import useBodyScrollLock from "../utils/DisableBodyScroll.jsx";
+import AddSemester from "../components/AddSemester.jsx";
 
 ChartJS.register(
   LineElement,
@@ -216,7 +224,8 @@ const HomePage = () => {
                 ) /
                   sems.reduce(
                     (acc, s) =>
-                      acc + (s.courses?.reduce((a, c) => a + c.credits, 0) || 0),
+                      acc +
+                      (s.courses?.reduce((a, c) => a + c.credits, 0) || 0),
                     0
                   ) || 0,
             };
@@ -224,9 +233,7 @@ const HomePage = () => {
         );
 
         // Compute average SPI per semester
-        const maxSem = Math.max(
-          ...usersData.map((u) => u.semesters.length)
-        );
+        const maxSem = Math.max(...usersData.map((u) => u.semesters.length));
         const avgSPI = Array(maxSem).fill(0);
         const counts = Array(maxSem).fill(0);
 
@@ -335,7 +342,6 @@ const HomePage = () => {
           {/* Decorative background blob */}
           <div className="absolute right-0 bottom-0 w-56 h-56 bg-blue-100 rounded-full opacity-30 blur-3xl pointer-events-none"></div>
         </section>
-
         {/* SPI Trend Chart */}
         <section className="bg-white rounded-3xl shadow-md p-6 mb-8">
           <div className="flex items-center gap-2 mb-4">
@@ -371,108 +377,24 @@ const HomePage = () => {
             </div>
           )}
         </section>
-
         {/* Add Semester Modal */}
-        {showForm && (
-          <div className="fixed inset-0 z-50 flex items-start justify-center">
-            {/* Full-page overlay with blur and dark background */}
-            <div className="absolute inset-0 bg-black/30 backdrop-blur-md"></div>
-            {/* Modal */}
-            <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-lg p-8 mt-24 z-10 overflow-y-auto max-h-[80vh]">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                }}
-              >
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                  Add Semester Grades
-                </h3>
-                <label className="block text-gray-700 mb-2">
-                  Select Semester:
-                </label>
-                <select
-                  className="w-full border p-2 rounded mb-4"
-                  value={selectedSemester || ""}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    if (!val) {
-                      setSelectedSemester(null);
-                      setGradeInputs({});
-                      return;
-                    }
-                    const sem = parseInt(val);
-                    setSelectedSemester(sem);
-                    setGradeInputs(
-                      branchCourses[sem]?.reduce((acc, course) => {
-                        acc[course.name] = "";
-                        return acc;
-                      }, {}) || {}
-                    );
-                  }}
-                >
-                  <option value="">-- Choose Semester --</option>
-                  {Object.keys(branchCourses).map((sem) => (
-                    <option key={sem} value={sem}>
-                      Semester {sem}
-                    </option>
-                  ))}
-                </select>
-
-                {/* Course Inputs */}
-                {selectedSemester && branchCourses[selectedSemester] && (
-                  <div className="mt-6">
-                    <div className="grid grid-cols-3 gap-4 font-semibold text-gray-800 border-b pb-2 mb-2">
-                      <div>Course Name</div>
-                      <div className="text-center">Credits</div>
-                      <div className="text-center">Grade</div>
-                    </div>
-
-                    <div className="space-y-2">
-                      {branchCourses[selectedSemester].map((course, idx) => (
-                        <div
-                          key={idx}
-                          className="grid grid-cols-3 gap-4 items-center py-2 border-b"
-                        >
-                          <div>{course.name}</div>
-                          <div className="text-center">{course.credits}</div>
-                          <input
-                            type="text"
-                            className="w-24 border p-1 rounded text-center mx-auto"
-                            value={gradeInputs[course.name] || ""}
-                            onChange={(e) =>
-                              setGradeInputs((prev) => ({
-                                ...prev,
-                                [course.name]: e.target.value.toUpperCase(),
-                              }))
-                            }
-                          />
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Submit Button */}
-                    <SemesterSubmitButton
-                      selectedSemester={selectedSemester}
-                      courseMap={branchCourses}
-                      gradeInputs={gradeInputs}
-                      gradePoints={gradePoints}
-                      user={user}
-                      db={db}
-                      toast={toast}
-                      setShowForm={setShowForm}
-                      setSelectedSemester={setSelectedSemester}
-                      setGradeInputs={setGradeInputs}
-                      setSemesters={setSemesters}
-                      setGpaStats={setGpaStats}
-                      computeGPA={computeGPA}
-                    />
-                  </div>
-                )}
-              </form>
-            </div>
-          </div>
-        )}
-
+        <AddSemester
+          showForm={showForm}
+          setShowForm={setShowForm}
+          selectedSemester={selectedSemester}
+          setSelectedSemester={setSelectedSemester}
+          gradeInputs={gradeInputs}
+          setGradeInputs={setGradeInputs}
+          branchCourses={branchCourses}
+          gradePoints={gradePoints}
+          user={user}
+          db={db}
+          toast={toast}
+          setSemesters={setSemesters}
+          setGpaStats={setGpaStats}
+          computeGPA={computeGPA}
+          SemesterSubmitButton={SemesterSubmitButton}
+        />
         {/* Semester Cards */}
         <section>
           <h3 className="text-xl font-bold text-gray-800 mb-4">
@@ -530,7 +452,6 @@ const HomePage = () => {
             ))}
           </div>
         </section>
-
         {/* Modals for Edit/Delete */}
         {showEditModal && (
           <>
@@ -569,7 +490,6 @@ const HomePage = () => {
             )}
           </>
         )}
-
         {showDeleteModal && (
           <>
             {activeSemester && (
@@ -609,7 +529,6 @@ const HomePage = () => {
             )}
           </>
         )}
-
         {/* Planner */}
         <section
           onClick={() => navigate("/planner")}
@@ -622,7 +541,6 @@ const HomePage = () => {
             Calculate the SPI you need next semester to reach your goal.
           </p>
         </section>
-
         {/* Upcoming Targets */}
         <hr className="my-8 border-gray-200" />
         {upcomingTargets.length > 0 && (
