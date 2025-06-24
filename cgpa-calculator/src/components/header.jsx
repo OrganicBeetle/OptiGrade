@@ -9,6 +9,7 @@ import {
   Tooltip,
   useMediaQuery,
 } from "@mui/material";
+import { FiUser } from "react-icons/fi";
 import { useAuth } from "../context/AuthContext";
 import { auth, db } from "../utils/firebase";
 import { toast } from "react-toastify";
@@ -123,6 +124,26 @@ const Header = () => {
 
         {/* Actions */}
         <Box display="flex" alignItems="center" gap={isMobile ? 1 : 2}>
+          {/* Friends Icon */}
+          <Tooltip title="Friends" arrow>
+            <IconButton
+              onClick={() => navigate("/friends")}
+              sx={{
+                bgcolor: "#f0f9ff",
+                color: "#0284c7",
+                borderRadius: "50%",
+                transition: "0.2s",
+                ml: 1,
+                "&:hover": {
+                  bgcolor: "#bae6fd",
+                  color: "#0369a1",
+                },
+              }}
+              aria-label="Friends"
+            >
+              <FiUser size={22} />
+            </IconButton>
+          </Tooltip>
           {/* Leaderboard Icon */}
           <Tooltip title="Leaderboard" arrow>
             <IconButton
@@ -144,7 +165,9 @@ const Header = () => {
 
           {/* Visibility Toggle */}
           <Tooltip
-            title={isPublic ? "Visible on Leaderboard" : "Hidden from Leaderboard"}
+            title={
+              isPublic ? "Visible on Leaderboard" : "Hidden from Leaderboard"
+            }
             arrow
           >
             <IconButton

@@ -4,6 +4,7 @@ import TargetPlanner from "./pages/TargetPlanner"
 import Leaderboard from "./pages/Leaderboard"
 import Signup from "./pages/signup"
 import HomePage from "./pages/homepage"
+import Friends from "./pages/Friends"
 
 const App = () => {
   return (
@@ -31,6 +32,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <Leaderboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/friends"
+          element={
+            <ProtectedRoute>
+              <Friends />
             </ProtectedRoute>
           }
         />
