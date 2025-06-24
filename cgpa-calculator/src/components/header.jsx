@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { FiEye, FiEyeOff, FiAward } from "react-icons/fi";
+import { FiEye, FiEyeOff, FiAward, FiCalendar } from "react-icons/fi";
 
 const Header = () => {
   const { user } = useAuth();
@@ -142,6 +142,25 @@ const Header = () => {
               aria-label="Friends"
             >
               <FiUser size={22} />
+            </IconButton>
+          </Tooltip>
+          {/* Exam Planner Icon */}
+          <Tooltip title="Exam Planner" arrow>
+            <IconButton
+              onClick={() => navigate("/calendar")}
+              sx={{
+                bgcolor: "#f0f9ff",
+                color: "#0284c7",
+                borderRadius: "50%",
+                transition: "0.2s",
+                "&:hover": {
+                  bgcolor: "#bae6fd",
+                  color: "#0369a1",
+                },
+              }}
+              aria-label="Exam Planner"
+            >
+              <FiCalendar size={22} />
             </IconButton>
           </Tooltip>
           {/* Leaderboard Icon */}

@@ -5,6 +5,7 @@ import Leaderboard from "./pages/Leaderboard"
 import Signup from "./pages/signup"
 import HomePage from "./pages/homepage"
 import Friends from "./pages/Friends"
+import ExamPlanner from "./pages/ExamPlanner"
 
 const App = () => {
   return (
@@ -40,6 +41,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <Friends />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/calendar"
+          element={
+            <ProtectedRoute>
+              <ExamPlanner />
             </ProtectedRoute>
           }
         />
