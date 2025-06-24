@@ -7,19 +7,21 @@ import { useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 
 const extractBranch = (email) => {
-  const match = email.match(/^[a-z]+\.[a-z]+\.([a-z]{2,5})\d{2}@iitbhu\.ac\.in$/i) ||
-                email.match(/^[a-z]+\.[a-z]+\.([a-z]{2,5})\d{2}@itbhu\.ac\.in$/i);
+  const match =
+    email.match(/^[a-z]+\.[a-z]+\.([a-z]{2,5})\d{2}@iitbhu\.ac\.in$/i) ||
+    email.match(/^[a-z]+\.[a-z]+\.([a-z]{2,5})\d{2}@itbhu\.ac\.in$/i);
   return match ? match[1].toUpperCase() : null;
 };
 
 const extractEntryYear = (email) => {
-  const match = email.match(/^[^.]+\.[^.]+\.[a-z]+(\d{2})@(?:iitbhu|itbhu)\.ac\.in$/i);
+  const match = email.match(
+    /^[^.]+\.[^.]+\.[a-z]+(\d{2})@(?:iitbhu|itbhu)\.ac\.in$/i
+  );
   if (!match) return null;
   const yearSuffix = match[1];
   const year = 2000 + parseInt(yearSuffix);
   return year;
 };
-
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -120,15 +122,32 @@ const Signup = () => {
             />
           </div>
 
-          <div className="flex items-center justify-between mt-4">
-            <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
-            <button
-              onClick={() => setIsSignup(!isSignup)}
-              className="text-xs text-gray-500 uppercase hover:underline"
-            >
-              {isSignup ? "Back to login" : "or sign up"}
-            </button>
-            <span className="w-1/5 border-b dark:border-gray-400 md:w-1/4"></span>
+          <div className="flex items-center justify-center mt-6">
+            {isSignup ? (
+              <span className="text-sm text-gray-600">
+                Already have an account?{" "}
+                <span
+                  onClick={() => setIsSignup(false)}
+                  className="font-semibold text-blue-700 underline cursor-pointer hover:text-blue-900 transition"
+                  tabIndex={0}
+                  role="button"
+                >
+                  Log In
+                </span>
+              </span>
+            ) : (
+              <span className="text-sm text-gray-600">
+                Don&apos;t have an account?{" "}
+                <span
+                  onClick={() => setIsSignup(true)}
+                  className="font-semibold text-blue-700 underline cursor-pointer hover:text-blue-900 transition"
+                  tabIndex={0}
+                  role="button"
+                >
+                  Sign Up
+                </span>
+              </span>
+            )}
           </div>
         </div>
       </div>
