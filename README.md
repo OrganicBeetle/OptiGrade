@@ -73,3 +73,16 @@ OptiGrade is a modern, full-stack web application designed to help IIT BHU stude
    ```
 
 ---
+
+## Screenshots
+<img width="1919" height="868" alt="image" src="https://github.com/user-attachments/assets/133b431b-dee0-435e-9d7d-98ec0d1d6851" />
+<img width="1919" height="863" alt="image" src="https://github.com/user-attachments/assets/cad5b2a9-2a7c-4137-b52e-9da8a5dd7cc3" />
+<img width="1919" height="661" alt="image" src="https://github.com/user-attachments/assets/dbba7090-e49a-41a2-bbf1-6e65cbc64a95" />
+<img width="1919" height="799" alt="image" src="https://github.com/user-attachments/assets/1c5ab15a-e8f1-4394-a186-9a627b0ec58f" />
+<img width="1213" height="656" alt="image" src="https://github.com/user-attachments/assets/430e7d01-1b3b-45f3-9b1b-5d7f6ec3c895" />
+<img width="1273" height="549" alt="image" src="https://github.com/user-attachments/assets/2e8085dc-9392-4651-ac39-5073be119587" />
+<img width="1919" height="868" alt="image" src="https://github.com/user-attachments/assets/0571d587-e9c4-439b-b64f-eb85267457f4" />
+
+
+
+
