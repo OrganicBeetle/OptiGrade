@@ -2,6 +2,9 @@
 
 OptiGrade is a modern, full-stack web application designed to help IIT BHU students track, analyze, and optimize their academic performance. It provides a seamless experience for managing semester grades, planning future targets, and benchmarking against peers.
 
+### For Demo Purposes: Use the following credentials to sign-in
+- E-Mail ID: demo.user.che23@itbhu.ac.in
+- Pass: ADMIN@123
 ---
 
 ## 🚀 Features
