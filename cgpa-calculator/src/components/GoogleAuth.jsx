@@ -155,9 +155,10 @@ const GoogleAuthButton = ({ isSignup }) => {
       const capName = name.charAt(0).toUpperCase() + name.slice(1);
       toast.success(`Welcome, ${capName}!`);
       navigate("/dashboard");
-    } catch {
-      toast.error("Google Login failed. Please try again.");
-    } finally {
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message || "Google Login failed");
+} finally {
       setLoading(false);
     }
   };
